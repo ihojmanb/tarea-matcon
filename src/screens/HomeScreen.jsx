@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from 'react';
-import firebaseConfig from '../../../firebaseCredentials.json'
+import firebaseConfig from '../../firebaseCredentials.json'
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service

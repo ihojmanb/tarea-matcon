@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './src/firebase/screens/HomeScreen';
-import CardScreen from './src/firebase/screens/CardScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import CardScreen from './src/screens/CardScreen';
 
 const Stack = createStackNavigator();
 
