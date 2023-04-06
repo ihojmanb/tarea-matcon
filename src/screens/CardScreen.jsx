@@ -1,9 +1,7 @@
 import { Text, View, Image } from 'react-native';
 import { Button } from '@rneui/base';
 import { MathJaxSvg } from 'react-native-mathjax-html-to-svg';
-import * as FileSystem from 'expo-file-system';
-import { shareAsync } from 'expo-sharing';
-
+import { downloadFromUrl, save } from '../../utils';
 function CardScreen({ route }) {
 
     const { id, elements, imageUrl } = route.params;
@@ -11,26 +9,12 @@ function CardScreen({ route }) {
     const title = titleElement?.texto?.esp;
     const paragraphElement = elements.find(element => element.tipo === 'parrafo')
     const paragraph = paragraphElement?.texto.esp;
+    const filename = `recurso-${id}.png`;
 
-    const downloadFromUrl = async (url) => {
-        try {
-            const filename = `recurso-${id}.png`;
-            const result = await FileSystem.downloadAsync(
-                url,
-                FileSystem.documentDirectory + filename
-            );
-            console.log(result)
-            save(result.uri)
-
-        } catch (error) {
-            console.error(error)
-        }
+    const handleDownload = async () => {
+        let fileUri = await downloadFromUrl(imageUrl, filename);
+        save(fileUri);
     }
-
-    const save = (uri) => {
-        shareAsync(uri);
-    }
-
 
     return (
         <View
@@ -72,7 +56,7 @@ function CardScreen({ route }) {
                 <Button
                     title="Descargar Imagen"
                     style={{ marginTop: 80, width: 256 }}
-                    onPress={() => { downloadFromUrl(imageUrl) }}
+                    onPress={handleDownload}
                 />
 
             }
