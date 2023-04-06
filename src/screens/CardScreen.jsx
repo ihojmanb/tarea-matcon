@@ -1,52 +1,81 @@
 import { Text, View, Image } from 'react-native';
 import { Button } from '@rneui/base';
 import { MathJaxSvg } from 'react-native-mathjax-html-to-svg';
+import * as FileSystem from 'expo-file-system';
+import { shareAsync } from 'expo-sharing';
 
 function CardScreen({ route }) {
+
     const { id, elements, imageUrl } = route.params;
     const titleElement = elements.find(element => element.tipo === 'titulo')
     const title = titleElement?.texto?.esp;
     const paragraphElement = elements.find(element => element.tipo === 'parrafo')
     const paragraph = paragraphElement?.texto.esp;
+
+    const downloadFromUrl = async (url) => {
+        try {
+            const filename = `recurso-${id}.png`;
+            const result = await FileSystem.downloadAsync(
+                url,
+                FileSystem.documentDirectory + filename
+            );
+            console.log(result)
+            save(result.uri)
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const save = (uri) => {
+        shareAsync(uri);
+    }
+
+
     return (
         <View
             className='flex justify-center items-center mt-5'
         >
-            <Text
-                className='text-xl font-bold'
-            >
-                {title}
-            </Text>
+            {title &&
+                <Text
+                    className='text-xl font-bold'
+                >
+                    {title}
+                </Text>
+            }
+            {paragraph &&
+                <MathJaxSvg
+                    fontSize={16}
+                    fontCache={true}
+                    style={
+                        {
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            margin: 20,
+                            marginTop: 80
+                        }}
+                >
+                    {`${paragraph}`}
+                </MathJaxSvg>
+            }
 
-            <MathJaxSvg
-                fontSize={16}
-                fontCache={true}
-                style={
-                    {
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        margin: 20,
-                        marginTop: 80
-                    }}
-            >
-                {`${paragraph}`}
-            </MathJaxSvg>
-            {imageUrl !== "" &&
+            {imageUrl &&
                 <Image
                     source={{ uri: imageUrl }}
                     className={`w-64 h-64 rounded-xl mt-20`}
                     resizeMode="cover"
                 />
-                
-            }
-            <Button
-                title="Descargar Imagen"
-                style={{marginTop: 80, width: 256}}
-                onPress={() => {
 
-                }}
-            />
+            }
+            {imageUrl &&
+                <Button
+                    title="Descargar Imagen"
+                    style={{ marginTop: 80, width: 256 }}
+                    onPress={() => { downloadFromUrl(imageUrl) }}
+                />
+
+            }
         </View>
     );
 }
