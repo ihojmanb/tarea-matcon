@@ -1,21 +1,14 @@
 import { Text, View, Image } from 'react-native';
-import { Button } from '@rneui/base';
 import { MathJaxSvg } from 'react-native-mathjax-html-to-svg';
-import { downloadFromUrl, save } from '../../utils';
-function CardScreen({ route }) {
+
+function OfflineCardDetailScreen({ route }) {
 
     const { id, elements, imageUrl } = route.params;
     const titleElement = elements.find(element => element.tipo === 'titulo')
     const title = titleElement?.texto?.esp;
     const paragraphElement = elements.find(element => element.tipo === 'parrafo')
     const paragraph = paragraphElement?.texto.esp;
-    const filename = `recurso-${id}.png`;
-
-    const handleDownload = async () => {
-        let fileUri = await downloadFromUrl(imageUrl, filename);
-        save(fileUri);
-    }
-
+    
     return (
         <View
             className='flex justify-center items-center mt-5'
@@ -52,16 +45,8 @@ function CardScreen({ route }) {
                 />
 
             }
-            {imageUrl &&
-                <Button
-                    title="Descargar Imagen"
-                    style={{ marginTop: 80, width: 256 }}
-                    onPress={handleDownload}
-                />
-
-            }
         </View>
     );
 }
 
-export default CardScreen;
+export default OfflineCardDetailScreen;
