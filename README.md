@@ -33,7 +33,19 @@ npx expo start
 
 para iniciar el emulador de iOS debemos apretar la tecla `i`.
 
-las credenciales de firebase deben ir en el root, en un archivo json `firebaseCredentials.json`
+las credenciales de firebase deben ir en el root, en un archivo json `firebaseCredentials.json`. Aquí te dejo un ejemplo:
+```
+{
+    "apiKey": "your_api_key",
+    "authDomain": "yourdomain.firebaseapp.com",
+    "projectId": "projectid-123",
+    "storageBucket": "your_storage_bucket.com",
+    "messagingSenderId": "012345678",
+    "appId": "appId",
+    "measurementId": "some_measurment_id"
+}
+
+```
 
 
 
