@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import firebaseConfig from '../../firebaseCredentials.json'
 import CardScreen from '../components/CardScreen';
 import { insertContent } from '../utils/downloadFilesUtils';
@@ -73,44 +72,6 @@ function ResourcesScreen({
     const updateDownloadedContent = () => {
 
     }
-    /**
-     *  updates or inserts content into local storage.
-     * if content exists:
-     *      if its the same: don't save it.
-     *      else: replace it.
-     * else: save it.
-     */
-    // useEffect(() => {
-    //     const upsertContentIfChanged = async () => {
-    //         if (resourcesList && resourcesList.length > 0) {
-    //             resourcesList.forEach(async resource => {
-    //                 try {
-    //                     const contentString = await getContentFromStorage(resource);
-    //                     const contentExists = contentString !== null;
-    //                     if (contentExists) {
-    //                         const sameContent = checkSameContent(resource, contentString);
-    //                         if (!sameContent) {
-    //                             await updateContent(resource);
-    //                         }
-    //                         else {
-    //                             console.log('content is equal')
-    //                         }
-    //                     }
-    //                     else {
-    //                         console.log('content does not exist: saving it');
-    //                         // create resource directory, if not already existent
-    //                         await createResourceDirectory(resource);
-    //                         // insert content in storage
-    //                         await insertContent(resource);
-    //                     }
-    //                 } catch (error) {
-    //                     console.log(error)
-    //                 }
-    //             })
-    //         }
-    //     };
-    //     upsertContentIfChanged();
-    // }, [resourcesList])
 
     return (
         <View

@@ -140,6 +140,10 @@ const registerResourceIds = async (resourcesSelected) => {
 
 };
 
+const updateContent = async (resource) => {
+    console.log('updating string in storage!')
+    await insertContent(resource);
+}
 export const downloadSelectedResources = async (resourcesList, resourcesSelected) => {
     console.log('total resources: ', resourcesList.length)
     const resourcesToBeDownloaded = resourcesList.filter(resource => resourcesSelected.includes(resource.id));

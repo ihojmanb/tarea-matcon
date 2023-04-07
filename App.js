@@ -6,11 +6,11 @@ import ResourcesScreen from './src/screens/ResourcesScreen';
 import CardDetailScreen from './src/screens/CardDetailScreen';
 import OfflineCardDetailScreen from './src/screens/OfflineCardDetailScreen';
 import OfflineResourcesScreen from './src/screens/OfflineResourcesScreen';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import DownloadButton from './src/components/DownloadButton';
 import { readRegisteredIds } from './src/utils/downloadFilesUtils';
-
+import { useNetInfo } from "@react-native-community/netinfo";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -84,46 +84,58 @@ export default function App() {
     console.log('registeredIds: ', registeredIds)
   }, [registeredIds]);
 
-  return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home"
-          options={{
-            headerRight: () => (
-              <DownloadButton
+  const netInfo = useNetInfo();
+
+  if (netInfo.isConnected) {
+    return (
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="Home"
+            options={{
+              headerRight: () => (
+                <DownloadButton
+                  resourcesList={resourcesList}
+                  resourcesSelected={resourcesSelected}
+                  setRegisteredIds={setRegisteredIds}
+                />
+              ),
+            }}
+
+          >
+            {(props) =>
+              <HomeScreen
+                {...props}
                 resourcesList={resourcesList}
+                setResourcesList={setResourcesList}
                 resourcesSelected={resourcesSelected}
-                setRegisteredIds={setRegisteredIds}
+                setResourcesSelected={setResourcesSelected}
               />
-            ),
-          }}
 
-        >
-          {(props) =>
-            <HomeScreen
-              {...props}
-              resourcesList={resourcesList}
-              setResourcesList={setResourcesList}
-              resourcesSelected={resourcesSelected}
-              setResourcesSelected={setResourcesSelected}
-            />
-          }
+            }
 
-        </Tab.Screen>
-        <Tab.Screen name="Offline" >
-          {(props) =>
-            // <OfflineResourcesScreen
-            //   {...props}
-            //   registeredIds={registeredIds}
-            // />
-            <OfflineScreen
-              {...props}
-              registeredIds={registeredIds}
-            />
-          }
-        </ Tab.Screen>
-      </Tab.Navigator>
-    </NavigationContainer>
+          </Tab.Screen>
+          <Tab.Screen name="Offline" >
+            {(props) =>
+              <OfflineScreen
+                {...props}
+                registeredIds={registeredIds}
+              />
+            }
+          </ Tab.Screen>
+        </Tab.Navigator>
+      </NavigationContainer>
+    );
 
-  );
+  }
+  else {
+    <View
+      className='flex justify-center items-center mt-5 mb-5'
+
+    >
+
+      <Text>
+        whoops not connected
+      </Text>
+    </View>
+  }
 }
