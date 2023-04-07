@@ -61,6 +61,7 @@ function OfflineResourcesScreen({
             >
                 {offlineResources.map(resource => {
                     const resourceId = resource.id;
+                    console.log('resource: ', resource);
                     return (
                         <OfflineResource
                             navigation={navigation}

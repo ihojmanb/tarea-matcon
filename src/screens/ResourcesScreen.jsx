@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import firebaseConfig from '../../firebaseCredentials.json'
 import CardScreen from '../components/CardScreen';
 import { insertContent } from '../utils/downloadFilesUtils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
