@@ -66,4 +66,4 @@ Hay dos formas para comprobar que los recursos que se descargan se guardan en la
 
 El video muestra que se logra obtener el contenido de la base de datos, y se demuestra el testing offline descrito en la sección anterior.
 
-[link al video]([URL](https://www.loom.com/share/3dd72ebe496a4f27a289ca830f736222))
+[link al video](https://www.loom.com/share/3dd72ebe496a4f27a289ca830f736222)
